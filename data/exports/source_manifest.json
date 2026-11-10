@@ -1,0 +1,38 @@
+{
+    "project": "Loan Application Management System",
+    "database": "SQLite",
+    "data_provenance": "Entirely synthetic data",
+    "random_seed": 20261022,
+    "applicant_count": 10000,
+    "application_count": 6000,
+    "exported_tables": [
+        "Applicant",
+        "Employment",
+        "IncomeRecord",
+        "CreditFacility",
+        "LoanProduct",
+        "LoanApplication",
+        "Document",
+        "AffordabilityCheck",
+        "Decision",
+        "RepaymentSchedule",
+        "ApplicationEvent",
+        "DisbursementEvent"
+    ],
+    "record_counts": {
+        "Applicant": 10000,
+        "Employment": 10000,
+        "IncomeRecord": 10001,
+        "CreditFacility": 12063,
+        "LoanProduct": 4,
+        "LoanApplication": 6000,
+        "Document": 24000,
+        "AffordabilityCheck": 6000,
+        "Decision": 6000,
+        "RepaymentSchedule": 36936,
+        "ApplicationEvent": 6000,
+        "DisbursementEvent": 2
+    },
+    "ground_truth_location": "../ground_truth/",
+    "ground_truth_used_as_features": false
+}

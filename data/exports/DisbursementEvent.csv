@@ -1,0 +1,3 @@
+disbursement_id,application_id,disbursed_amount,disbursement_status,disbursed_at,transaction_reference
+DISB-ANOM-001,LOAN-2026-000006,44971.36,SUCCESS,2026-11-10T10:00:00,TXN-ANOM-001
+DISB-ANOM-002,LOAN-2026-000006,44971.36,SUCCESS,2026-11-10T10:05:00,TXN-ANOM-002

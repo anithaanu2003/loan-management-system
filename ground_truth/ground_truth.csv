@@ -1,0 +1,6 @@
+anomaly_id,anomaly_type,applicant_id,application_id,description,record_id
+ANOM-001,TERM_OUTSIDE_PRODUCT_RANGE,,LOAN-2026-000038,Requested loan term exceeds product maximum,
+ANOM-002,REPAYMENT_TOTAL_MISMATCH,,LOAN-2026-000006,Total payment does not equal principal plus interest,SCH-LOAN-2026-000006-001
+ANOM-003,DECISION_BEFORE_REQUIRED_CHECK,,LOAN-2026-000001,Decision timestamp is earlier than affordability check,DEC-LOAN-2026-000001-01
+ANOM-004,CONFLICTING_INCOME_RECORDS,APP-2026-000003,,Two income records report different monthly income for the same applicant,INC-CONFLICT-000001
+ANOM-005,DUPLICATE_DISBURSEMENT,,LOAN-2026-000006,Two successful disbursements exist for the same application,

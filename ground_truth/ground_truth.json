@@ -1,0 +1,35 @@
+[
+    {
+        "anomaly_id": "ANOM-001",
+        "anomaly_type": "TERM_OUTSIDE_PRODUCT_RANGE",
+        "application_id": "LOAN-2026-000038",
+        "description": "Requested loan term exceeds product maximum"
+    },
+    {
+        "anomaly_id": "ANOM-002",
+        "anomaly_type": "REPAYMENT_TOTAL_MISMATCH",
+        "application_id": "LOAN-2026-000006",
+        "record_id": "SCH-LOAN-2026-000006-001",
+        "description": "Total payment does not equal principal plus interest"
+    },
+    {
+        "anomaly_id": "ANOM-003",
+        "anomaly_type": "DECISION_BEFORE_REQUIRED_CHECK",
+        "application_id": "LOAN-2026-000001",
+        "record_id": "DEC-LOAN-2026-000001-01",
+        "description": "Decision timestamp is earlier than affordability check"
+    },
+    {
+        "anomaly_id": "ANOM-004",
+        "anomaly_type": "CONFLICTING_INCOME_RECORDS",
+        "applicant_id": "APP-2026-000003",
+        "record_id": "INC-CONFLICT-000001",
+        "description": "Two income records report different monthly income for the same applicant"
+    },
+    {
+        "anomaly_id": "ANOM-005",
+        "anomaly_type": "DUPLICATE_DISBURSEMENT",
+        "application_id": "LOAN-2026-000006",
+        "description": "Two successful disbursements exist for the same application"
+    }
+]

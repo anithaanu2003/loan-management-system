@@ -1,0 +1,5 @@
+product_id,product_name,min_amount,max_amount,annual_interest_rate,min_term_months,max_term_months,product_status
+PROD-001,Personal Loan,10000.0,500000.0,12.0,6,60,ACTIVE
+PROD-002,Home Loan,500000.0,5000000.0,8.5,60,360,ACTIVE
+PROD-003,Vehicle Loan,50000.0,1500000.0,10.0,12,84,ACTIVE
+PROD-004,Education Loan,50000.0,2000000.0,9.0,12,120,ACTIVE

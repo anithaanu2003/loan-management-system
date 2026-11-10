@@ -1,0 +1,42 @@
+[
+    {
+        "product_id": "PROD-001",
+        "product_name": "Personal Loan",
+        "min_amount": 10000.0,
+        "max_amount": 500000.0,
+        "annual_interest_rate": 12.0,
+        "min_term_months": 6,
+        "max_term_months": 60,
+        "product_status": "ACTIVE"
+    },
+    {
+        "product_id": "PROD-002",
+        "product_name": "Home Loan",
+        "min_amount": 500000.0,
+        "max_amount": 5000000.0,
+        "annual_interest_rate": 8.5,
+        "min_term_months": 60,
+        "max_term_months": 360,
+        "product_status": "ACTIVE"
+    },
+    {
+        "product_id": "PROD-003",
+        "product_name": "Vehicle Loan",
+        "min_amount": 50000.0,
+        "max_amount": 1500000.0,
+        "annual_interest_rate": 10.0,
+        "min_term_months": 12,
+        "max_term_months": 84,
+        "product_status": "ACTIVE"
+    },
+    {
+        "product_id": "PROD-004",
+        "product_name": "Education Loan",
+        "min_amount": 50000.0,
+        "max_amount": 2000000.0,
+        "annual_interest_rate": 9.0,
+        "min_term_months": 12,
+        "max_term_months": 120,
+        "product_status": "ACTIVE"
+    }
+]
