@@ -1,6 +1,7 @@
 import sqlite3
 import csv
 import json
+import argparse
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -174,7 +175,48 @@ def inject_anomalies():
             "application_id": app_id,
             "description": "Two successful disbursements exist for the same application"
         })
+        
+        # 6. Duplicate loan applications
+        duplicate_applications = connection.execute("""
+            SELECT
+                applicant_id,
+                product_id,
+                requested_amount,
+                requested_term_months,
+                application_date,
+                GROUP_CONCAT(application_id) AS application_ids,
+                COUNT(*) AS application_count
+            FROM LoanApplication
+            GROUP BY
+                applicant_id,
+                product_id,
+                requested_amount,
+                requested_term_months,
+                application_date
+            HAVING COUNT(*) > 1
+        """).fetchall()
 
+        for duplicate in duplicate_applications:
+            (
+                applicant_id,
+                product_id,
+                requested_amount,
+                requested_term,
+                application_date,
+                application_ids,
+                application_count
+            ) = duplicate
+
+            anomalies.append({
+                "anomaly_id": "ANOM-006",
+                "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+                "applicant_id": applicant_id,
+                "application_ids": application_ids,
+                "duplicate_count": application_count,
+                "description": (
+                    "Same applicant submitted matching loan applications"
+                )
+            })
         connection.commit()
 
         # Save ground truth separately
@@ -216,6 +258,26 @@ def inject_anomalies():
     finally:
         connection.close()
 
-
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Inject known anomalies into the loan database"
+    )
+    parser.add_argument(
+        "--db",
+        type=str,
+        default=str(DB_PATH),
+        help="Path to the SQLite database"
+    )
+    parser.add_argument(
+        "--ground-truth-dir",
+        type=str,
+        default=str(GROUND_TRUTH_DIR),
+        help="Directory for ground truth files"
+    )
+
+    args = parser.parse_args()
+
+    DB_PATH = Path(args.db).resolve()
+    GROUND_TRUTH_DIR = Path(args.ground_truth_dir).resolve()
+
     inject_anomalies()

@@ -1,4 +1,5 @@
 import sqlite3
+import argparse
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -153,6 +154,31 @@ def validate_database():
         print("Detected applications:", len(disbursement_errors))
         for row in disbursement_errors:
             print(row)
+        # Anomaly 6: Duplicate loan applications
+        duplicate_application_errors = connection.execute("""
+            SELECT
+                applicant_id,
+                product_id,
+                requested_amount,
+                requested_term_months,
+                application_date,
+                COUNT(*) AS application_count,
+                GROUP_CONCAT(application_id) AS application_ids
+            FROM LoanApplication
+            GROUP BY
+                applicant_id,
+                product_id,
+                requested_amount,
+                requested_term_months,
+                application_date
+            HAVING COUNT(*) > 1
+        """).fetchall()
+
+        print("\nANOM-006: Duplicate loan applications")
+        print("Detected duplicate groups:", len(duplicate_application_errors))
+
+        for row in duplicate_application_errors:
+            print(row)
 
         print("\n" + "=" * 55)
         print("VALIDATION COMPLETED")
@@ -163,4 +189,17 @@ def validate_database():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Validate loan management database"
+    )
+    parser.add_argument(
+        "--db",
+        type=str,
+        default=str(DB_PATH),
+        help="Path to the SQLite database"
+    )
+
+    args = parser.parse_args()
+    DB_PATH = Path(args.db).resolve()
+
     validate_database()

@@ -1,0 +1,14 @@
+{
+    "foreign_key_violations": 0,
+    "invalid_employment_dates": 0,
+    "invalid_income_dates": 0,
+    "invalid_document_dates": 0,
+    "detected_anomalies": {
+        "term_outside_product_range": 1,
+        "repayment_total_mismatch": 1,
+        "decision_before_required_check": 1,
+        "conflicting_income_records": 1,
+        "duplicate_successful_disbursement": 1,
+        "duplicate_loan_application_groups": 60
+    }
+}

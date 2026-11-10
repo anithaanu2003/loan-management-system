@@ -1,6 +1,7 @@
 import sqlite3
 import csv
 import json
+import argparse
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -85,7 +86,7 @@ def export_data():
             "application_count": total_records["LoanApplication"],
             "exported_tables": TABLES,
             "record_counts": total_records,
-            "ground_truth_location": "../ground_truth/",
+            "ground_truth_location": "../../../ground_truth/full_test/",
             "ground_truth_used_as_features": False
         }
 
@@ -107,7 +108,8 @@ def export_data():
                 "repayment_total_mismatch": 1,
                 "decision_before_required_check": 1,
                 "conflicting_income_records": 1,
-                "duplicate_successful_disbursement": 1
+                "duplicate_successful_disbursement": 1,
+                "duplicate_loan_application_groups": 60
             }
         }
 
@@ -126,4 +128,25 @@ def export_data():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Export loan management database"
+    )
+    parser.add_argument(
+        "--db",
+        type=str,
+        default=str(DB_PATH),
+        help="Path to the SQLite database"
+    )
+    parser.add_argument(
+        "--export-dir",
+        type=str,
+        default=str(EXPORT_DIR),
+        help="Directory for exported files"
+    )
+
+    args = parser.parse_args()
+
+    DB_PATH = Path(args.db).resolve()
+    EXPORT_DIR = Path(args.export_dir).resolve()
+
     export_data()

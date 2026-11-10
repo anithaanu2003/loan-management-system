@@ -1,5 +1,6 @@
 import random
 import sqlite3
+import argparse
 from pathlib import Path
 from datetime import date, timedelta
 
@@ -10,6 +11,7 @@ DB_PATH = ROOT_DIR / "data" / "loan_management.db"
 # Reproducible random data
 SEED = 20261022
 TOTAL_APPLICANTS = 10000
+TOTAL_APPLICATIONS = 6000
 
 random_generator = random.Random(SEED)
 
@@ -499,6 +501,7 @@ def generate_loan_products():
     finally:
         connection.close()
         
+
 def generate_loan_applications():
     connection = sqlite3.connect(DB_PATH)
     connection.execute("PRAGMA foreign_keys = ON")
@@ -520,9 +523,18 @@ def generate_loan_applications():
         WHERE product_status = 'ACTIVE'
     """).fetchall()
 
-    # Select 6,000 different applicants
+    # Reserve 1% of applications for deliberate duplicates
+    duplicate_count = (
+        min(max(1, int(TOTAL_APPLICATIONS * 0.01)),
+            TOTAL_APPLICATIONS - 1)
+        if TOTAL_APPLICATIONS > 1 else 0
+    )
+
+    baseline_count = TOTAL_APPLICATIONS - duplicate_count
+
+    # Select different applicants for baseline applications
     selected_applicants = random_generator.sample(
-        applicants, 6000
+        applicants, baseline_count
     )
 
     applications = []
@@ -565,6 +577,22 @@ def generate_loan_applications():
             "SUBMITTED"
         ))
 
+    # Create deliberate duplicate applications
+    duplicate_sources = random_generator.sample(
+        applications, duplicate_count
+    )
+
+    for index, original in enumerate(
+        duplicate_sources,
+        start=baseline_count + 1
+    ):
+        duplicate = (
+            f"LOAN-2026-{index:06d}",
+            *original[1:]
+        )
+
+        applications.append(duplicate)
+
     try:
         connection.executemany("""
             INSERT OR IGNORE INTO LoanApplication (
@@ -586,6 +614,8 @@ def generate_loan_applications():
         ).fetchone()[0]
 
         print(f"\nLoan applications created: {total}")
+        print(f"Baseline applications: {baseline_count}")
+        print(f"Duplicate applications: {duplicate_count}")
 
         summary = connection.execute("""
             SELECT p.product_name, COUNT(*)
@@ -602,6 +632,7 @@ def generate_loan_applications():
 
     finally:
         connection.close()
+
         
 def generate_documents():
     connection = sqlite3.connect(DB_PATH)
@@ -715,6 +746,41 @@ def generate_documents():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Generate synthetic loan management data"
+    )
+
+    parser.add_argument(
+        "--applicants",
+        type=int,
+        default=10000
+    )
+
+    parser.add_argument(
+        "--applications",
+        type=int,
+        default=6000
+    )
+    
+    parser.add_argument(
+        "--db",
+        type=str,
+        default=str(DB_PATH),
+        help="Path to the SQLite database"
+    )
+
+    args = parser.parse_args()
+
+    if args.applicants <= 0 or args.applications <= 0:
+        parser.error("Counts must be greater than zero")
+
+    if args.applications > args.applicants:
+        parser.error("Applications cannot exceed applicants")
+
+    TOTAL_APPLICANTS = args.applicants
+    TOTAL_APPLICATIONS = args.applications
+    DB_PATH = Path(args.db).resolve()
+
     insert_applicants()
     generate_employment()
     generate_income_records()

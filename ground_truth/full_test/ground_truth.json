@@ -1,0 +1,515 @@
+[
+    {
+        "anomaly_id": "ANOM-001",
+        "anomaly_type": "TERM_OUTSIDE_PRODUCT_RANGE",
+        "application_id": "LOAN-2026-000046",
+        "description": "Requested loan term exceeds product maximum"
+    },
+    {
+        "anomaly_id": "ANOM-002",
+        "anomaly_type": "REPAYMENT_TOTAL_MISMATCH",
+        "application_id": "LOAN-2026-000002",
+        "record_id": "SCH-LOAN-2026-000002-001",
+        "description": "Total payment does not equal principal plus interest"
+    },
+    {
+        "anomaly_id": "ANOM-003",
+        "anomaly_type": "DECISION_BEFORE_REQUIRED_CHECK",
+        "application_id": "LOAN-2026-000001",
+        "record_id": "DEC-LOAN-2026-000001-01",
+        "description": "Decision timestamp is earlier than affordability check"
+    },
+    {
+        "anomaly_id": "ANOM-004",
+        "anomaly_type": "CONFLICTING_INCOME_RECORDS",
+        "applicant_id": "APP-2026-000003",
+        "record_id": "INC-CONFLICT-000001",
+        "description": "Two income records report different monthly income for the same applicant"
+    },
+    {
+        "anomaly_id": "ANOM-005",
+        "anomaly_type": "DUPLICATE_DISBURSEMENT",
+        "application_id": "LOAN-2026-000002",
+        "description": "Two successful disbursements exist for the same application"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-000075",
+        "application_ids": "LOAN-2026-004403,LOAN-2026-005966",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-000149",
+        "application_ids": "LOAN-2026-002169,LOAN-2026-005959",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-000227",
+        "application_ids": "LOAN-2026-005646,LOAN-2026-005953",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-000330",
+        "application_ids": "LOAN-2026-000118,LOAN-2026-005987",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-000575",
+        "application_ids": "LOAN-2026-003334,LOAN-2026-005978",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-000862",
+        "application_ids": "LOAN-2026-000352,LOAN-2026-005949",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-000929",
+        "application_ids": "LOAN-2026-003666,LOAN-2026-005994",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-001026",
+        "application_ids": "LOAN-2026-004943,LOAN-2026-005997",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-001157",
+        "application_ids": "LOAN-2026-000546,LOAN-2026-005956",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-001409",
+        "application_ids": "LOAN-2026-004912,LOAN-2026-005943",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-001465",
+        "application_ids": "LOAN-2026-003024,LOAN-2026-005947",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-001795",
+        "application_ids": "LOAN-2026-003353,LOAN-2026-005965",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-001877",
+        "application_ids": "LOAN-2026-003490,LOAN-2026-005998",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-002073",
+        "application_ids": "LOAN-2026-002584,LOAN-2026-005985",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-002177",
+        "application_ids": "LOAN-2026-003896,LOAN-2026-005946",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-002442",
+        "application_ids": "LOAN-2026-003279,LOAN-2026-005968",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-002614",
+        "application_ids": "LOAN-2026-005665,LOAN-2026-005941",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-002666",
+        "application_ids": "LOAN-2026-004287,LOAN-2026-005950",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-002747",
+        "application_ids": "LOAN-2026-000848,LOAN-2026-005979",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-003202",
+        "application_ids": "LOAN-2026-004426,LOAN-2026-005974",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-003265",
+        "application_ids": "LOAN-2026-000365,LOAN-2026-005961",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-003303",
+        "application_ids": "LOAN-2026-004656,LOAN-2026-005952",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-003357",
+        "application_ids": "LOAN-2026-002414,LOAN-2026-005988",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-003412",
+        "application_ids": "LOAN-2026-005680,LOAN-2026-005958",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-003425",
+        "application_ids": "LOAN-2026-001470,LOAN-2026-005942",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-003789",
+        "application_ids": "LOAN-2026-002453,LOAN-2026-005999",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-003994",
+        "application_ids": "LOAN-2026-004825,LOAN-2026-005989",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-004155",
+        "application_ids": "LOAN-2026-004678,LOAN-2026-005973",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-004313",
+        "application_ids": "LOAN-2026-003267,LOAN-2026-005964",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-004675",
+        "application_ids": "LOAN-2026-001021,LOAN-2026-005962",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-004951",
+        "application_ids": "LOAN-2026-005772,LOAN-2026-005982",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-004986",
+        "application_ids": "LOAN-2026-003618,LOAN-2026-005975",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-005345",
+        "application_ids": "LOAN-2026-003781,LOAN-2026-005971",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-005566",
+        "application_ids": "LOAN-2026-002512,LOAN-2026-005945",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-005630",
+        "application_ids": "LOAN-2026-000698,LOAN-2026-005969",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-005671",
+        "application_ids": "LOAN-2026-004100,LOAN-2026-005995",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-005736",
+        "application_ids": "LOAN-2026-000441,LOAN-2026-005981",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-005786",
+        "application_ids": "LOAN-2026-003395,LOAN-2026-005970",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-006440",
+        "application_ids": "LOAN-2026-003210,LOAN-2026-005951",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-006465",
+        "application_ids": "LOAN-2026-000514,LOAN-2026-005986",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-006504",
+        "application_ids": "LOAN-2026-002094,LOAN-2026-005976",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-006822",
+        "application_ids": "LOAN-2026-000389,LOAN-2026-005992",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-006891",
+        "application_ids": "LOAN-2026-003881,LOAN-2026-005957",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-007253",
+        "application_ids": "LOAN-2026-002561,LOAN-2026-005980",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-007312",
+        "application_ids": "LOAN-2026-000105,LOAN-2026-005996",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-007420",
+        "application_ids": "LOAN-2026-000292,LOAN-2026-005944",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-007639",
+        "application_ids": "LOAN-2026-002790,LOAN-2026-005955",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-007682",
+        "application_ids": "LOAN-2026-003112,LOAN-2026-005948",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-007726",
+        "application_ids": "LOAN-2026-001479,LOAN-2026-005963",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-007810",
+        "application_ids": "LOAN-2026-003823,LOAN-2026-005983",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-007837",
+        "application_ids": "LOAN-2026-005360,LOAN-2026-005984",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-008355",
+        "application_ids": "LOAN-2026-000032,LOAN-2026-005967",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-008382",
+        "application_ids": "LOAN-2026-004398,LOAN-2026-005954",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-008462",
+        "application_ids": "LOAN-2026-000545,LOAN-2026-006000",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-008894",
+        "application_ids": "LOAN-2026-000833,LOAN-2026-005972",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-009445",
+        "application_ids": "LOAN-2026-005335,LOAN-2026-005960",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-009648",
+        "application_ids": "LOAN-2026-002882,LOAN-2026-005990",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-009687",
+        "application_ids": "LOAN-2026-003325,LOAN-2026-005991",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-009741",
+        "application_ids": "LOAN-2026-000843,LOAN-2026-005993",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    },
+    {
+        "anomaly_id": "ANOM-006",
+        "anomaly_type": "DUPLICATE_LOAN_APPLICATION",
+        "applicant_id": "APP-2026-009804",
+        "application_ids": "LOAN-2026-002567,LOAN-2026-005977",
+        "duplicate_count": 2,
+        "description": "Same applicant submitted matching loan applications"
+    }
+]

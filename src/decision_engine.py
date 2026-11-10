@@ -1,5 +1,6 @@
 import sqlite3
 import json
+import argparse
 from pathlib import Path
 from datetime import date, timedelta
 
@@ -217,4 +218,19 @@ def generate_decisions():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Generate loan application decisions"
+    )
+
+    parser.add_argument(
+        "--db",
+        type=str,
+        default=str(DB_PATH),
+        help="Path to the SQLite database"
+    )
+
+    args = parser.parse_args()
+
+    DB_PATH = Path(args.db).resolve()
+
     generate_decisions()
