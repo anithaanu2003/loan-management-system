@@ -18,6 +18,14 @@ A Python and SQLite-based loan application management and risk assessment system
 loan-management-system/
 ├── data/
 │   └── exports/
+|           |
+|           |--Applicant.csv
+|           |--Applicant.json
+|           |--LoanApplication.csv
+|           |--LoanApplication.json
+|           |--seed_data.sql
+|           |--source_manifest.json
+|           |-- validation_summary.json
 ├── ground_truth/
 │   ├── ground_truth.csv
 │   └── ground_truth.json
