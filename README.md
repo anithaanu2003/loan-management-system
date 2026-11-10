@@ -1,14 +1,15 @@
 # Loan Application Management System
 
-A Python and SQLite-based loan application management system that generates synthetic loan data, evaluates affordability, makes rule-based loan decisions, creates repayment schedules, detects data anomalies, and exports validated datasets.
+A Python and SQLite-based loan application management system that generates synthetic loan data, evaluates affordability, makes rule-based loan decisions, creates repayment schedules, manages disbursement eligibility, detects data anomalies, and exports validated datasets.
 
 ## Project Overview
 
-This project simulates a loan application processing workflow, from applicant and financial data management to affordability assessment and decision generation.
+This project simulates an end-to-end loan application processing workflow, from applicant and financial data management to affordability assessment, decision generation, repayment scheduling, and disbursement eligibility.
 
-It is designed to demonstrate relational database design, synthetic data generation, financial calculations, rule-based decision-making, data validation, anomaly detection, and data export.
+It demonstrates relational database design, synthetic data generation, financial calculations, rule-based decision-making, data validation, anomaly detection, event tracking, and data export.
 
 **Dataset scale:**
+
 - 10,000 synthetic applicants
 - 6,000 loan applications
 - 4 loan products
@@ -20,12 +21,14 @@ All data is synthetic and created for demonstration and testing purposes. No rea
 ## Key Features
 
 ### 1. Relational Database Management
+
 - Designed a relational database using SQLite.
 - Implemented primary keys, foreign keys, constraints, and relationships.
-- Maintained application and disbursement event records.
+- Maintained application lifecycle and disbursement event records.
 - Structured data across 12 tables.
 
 ### 2. Synthetic Data Generation
+
 - Generated 10,000 applicants and 6,000 loan applications.
 - Created employment, income, credit facility, loan product, and document records.
 - Used a fixed random seed (`20261022`) for reproducibility.
@@ -33,15 +36,18 @@ All data is synthetic and created for demonstration and testing purposes. No rea
 - Included missing documents, duplicate applications, and different financial risk scenarios.
 
 ### 3. Affordability Assessment
+
 - Calculated proposed monthly loan EMIs.
 - Evaluated existing and proposed EMI obligations.
 - Calculated debt-to-income ratios and disposable income.
 - Classified affordability results as `PASS`, `REVIEW`, or `FAIL`.
 
 ### 4. Rule-Based Loan Decision Engine
+
 Generated one decision for each loan application using affordability results, credit score, income proof, employment status, and document verification.
 
 Possible outcomes:
+
 - `APPROVED`
 - `REJECTED`
 - `MANUAL_REVIEW`
@@ -49,11 +55,23 @@ Possible outcomes:
 The decision engine also records decision reasons and application status changes.
 
 ### 5. Repayment Schedule Generation
+
 - Generated repayment schedules for approved applications.
 - Calculated monthly EMI, interest, principal, and outstanding balance.
 - Generated monthly repayment due dates.
 
-### 6. Anomaly Injection and Detection
+### 6. Disbursement Management
+
+- Checked disbursement eligibility using application status and decision results.
+- Verified affordability status and all four required documents.
+- Checked repayment schedule completeness.
+- Recorded successful disbursement events with transaction references.
+- Prevented repeated successful disbursements.
+- Updated application status to `DISBURSED`.
+- Maintained application event history for traceability.
+
+### 7. Anomaly Injection and Detection
+
 Implemented six anomaly categories:
 
 | Anomaly ID | Description |
@@ -67,8 +85,10 @@ Implemented six anomaly categories:
 
 Known anomalies and expected anomaly details are stored separately in ground-truth CSV and JSON files. Ground-truth information is not used as a decision-engine feature.
 
-### 7. Data Validation
+### 8. Data Validation
+
 The validation script checks:
+
 - Database table record counts.
 - Foreign-key integrity.
 - Employment, income, and document date consistency.
@@ -79,13 +99,16 @@ The validation script checks:
 - Duplicate successful disbursements.
 - Duplicate loan application groups.
 
-### 8. Data Export
+### 9. Data Export
+
 Exports all 12 database tables into:
+
 - CSV files
 - JSON files
 - SQL seed data
 
 Additional metadata files:
+
 - `source_manifest.json`
 - `validation_summary.json`
 
@@ -151,6 +174,7 @@ loan-management-system/
 │   ├── affordability.py
 │   ├── decision_engine.py
 │   ├── repayment.py
+│   ├── disbursement.py
 │   ├── anomaly_detection.py
 │   ├── validation.py
 │   └── export_data.py
@@ -170,6 +194,7 @@ The SQLite database files are generated locally and excluded from Git using `.gi
 ## Installation and Setup
 
 ### Prerequisites
+
 - Python 3.13 or compatible Python version
 - Git
 - Visual Studio Code or another Python editor
@@ -224,21 +249,52 @@ python src/decision_engine.py
 python src/repayment.py
 ```
 
-### 5. Inject known anomalies and generate ground truth
+### 5. Check disbursement eligibility
+
+Check whether an approved application is eligible for disbursement:
+
+```bash
+python src/disbursement.py --application-id LOAN-2026-XXXXXX --action check
+```
+
+Replace the example application ID with an actual application ID from the generated database.
+
+The eligibility check verifies:
+
+- Application approval status.
+- Approved decision record.
+- Passed affordability assessment.
+- Verification of all four required documents.
+- Completeness of the repayment schedule.
+- Absence of an existing successful disbursement.
+
+### 6. Record a disbursement
+
+For an eligible application, record the successful disbursement:
+
+```bash
+python src/disbursement.py --application-id LOAN-2026-XXXXXX --action disburse --transaction-reference TXN-2026-000001
+```
+
+The system records the disbursement, updates the application status to `DISBURSED`, and creates an application lifecycle event.
+
+A second successful disbursement for the same application is prevented.
+
+### 7. Inject known anomalies and generate ground truth
 
 ```bash
 python src/anomaly_detection.py
 ```
 
-**Important:** Run anomaly injection only once on a clean generated database. It modifies database records to introduce known anomalies.
+**Important:** Run anomaly injection only once on a clean generated database. It modifies database records to introduce known anomalies, including duplicate successful disbursement events.
 
-### 6. Validate the database
+### 8. Validate the database
 
 ```bash
 python src/validation.py
 ```
 
-### 7. Export the data
+### 9. Export the data
 
 ```bash
 python src/export_data.py
@@ -246,7 +302,7 @@ python src/export_data.py
 
 The default database is `data/loan_management.db`, and the default export directory is `data/exports`.
 
-### Running with a separate database
+## Running with a Separate Database
 
 The data-generation and processing scripts support a `--db` argument. For example:
 
@@ -255,6 +311,26 @@ python src/data_generator.py --applicants 10000 --applications 6000 --db data/fu
 ```
 
 Use the same database path for the subsequent processing scripts.
+
+To generate affordability checks, decisions, and repayment schedules:
+
+```bash
+python src/affordability.py --db data/full_test.db
+```
+
+```bash
+python src/decision_engine.py --db data/full_test.db
+```
+
+```bash
+python src/repayment.py --db data/full_test.db
+```
+
+To check disbursement eligibility:
+
+```bash
+python src/disbursement.py --db data/full_test.db --application-id LOAN-2026-XXXXXX --action check
+```
 
 To export that database separately:
 
@@ -287,6 +363,8 @@ The completed full-scale pipeline produced the following results:
 | ApplicationEvent | 6,000 |
 | DisbursementEvent | 2 |
 
+**Note:** These figures represent the previously completed full-scale pipeline before the new normal disbursement workflow was tested against the full-scale database.
+
 ### Loan Decision Distribution
 
 | Decision | Applications |
@@ -310,6 +388,21 @@ The completed full-scale pipeline produced the following results:
 
 All 65 known anomaly records were detected in the full-scale validation run.
 
+## Disbursement Workflow Testing
+
+The normal disbursement workflow was tested using an isolated test database.
+
+Verified test cases:
+
+1. Eligible approved application successfully disbursed.
+2. Repeated disbursement attempt blocked.
+3. Rejected application disbursement prevented.
+4. Application status updated to `DISBURSED`.
+5. Application event history recorded as `APPROVED` to `DISBURSED`.
+6. Command-line eligibility check correctly identified an existing successful disbursement.
+
+These tests demonstrate the normal disbursement workflow. Full-scale disbursement testing remains separate.
+
 ## Automated Testing
 
 The project uses pytest for automated testing.
@@ -320,17 +413,20 @@ Run:
 python -m pytest -v
 ```
 
-Latest test results:
+Previously recorded test results:
 
 ```text
 4 passed in 0.43s
 ```
 
 Tests cover:
+
 1. Database existence.
 2. Expected record counts.
 3. Foreign-key integrity.
 4. Detection of all five individually injected anomaly types.
+
+The recorded test results should be refreshed after any code or test changes.
 
 ## Data Provenance and Reproducibility
 
@@ -338,24 +434,24 @@ Tests cover:
 - The random seed is `20261022`.
 - The generator supports configurable dataset sizes.
 - Ground-truth anomaly records are maintained separately from decision inputs.
-- The source manifest records the data provenance, seed, exported tables, and record counts.
+- The source manifest records data provenance, seed, exported tables, and record counts.
 - SQL seed data is included in the full-scale export folder.
 
 ## Limitations
 
-- Loan decisions are generated using demonstration rule-based logic, not a production credit-risk model.
+- Loan decisions use demonstration rule-based logic, not a production credit-risk model.
 - No real credit bureau or external financial institution is connected.
-- Disbursement event records are included for event tracking and anomaly testing; this project does not implement a complete real-world disbursement workflow.
+- The disbursement workflow simulates successful disbursement recording; it does not connect to real banking or payment systems.
 - The system uses synthetic data and is not intended for actual lending decisions.
 - The validation summary export is a recorded summary of the completed validation results.
 
 ## Future Improvements
 
 - Add more comprehensive lifecycle and business-rule validation.
-- Implement a complete disbursement eligibility workflow.
 - Automate generation of validation summary reports.
 - Add more test cases for boundary conditions and invalid data.
-- Extend the anomaly detection rules.
+- Extend anomaly detection and reporting.
+- Integrate with external payment systems in a simulated environment.
 
 ## Author
 
@@ -363,7 +459,7 @@ Tests cover:
 
 GitHub: [anithaanu2003](https://github.com/anithaanu2003)
 
-**Repository:** [Loan Application Management System](https://github.com/anithaanu2003/loan-management-system)
+Repository: [Loan Application Management System](https://github.com/anithaanu2003/loan-management-system)
 
 ---
 
