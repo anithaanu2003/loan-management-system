@@ -17,7 +17,6 @@ A Python and SQLite-based loan application management and risk assessment system
 ```text
 loan-management-system/
 ├── data/
-│   ├── loan_management.db
 │   └── exports/
 ├── ground_truth/
 │   ├── ground_truth.csv
