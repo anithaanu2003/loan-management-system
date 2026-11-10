@@ -26,3 +26,7 @@ venv/
 data/repro_test_*.db
 data/repro_exports_*/
 ground_truth/repro_test_*/
+# Full-scale reproducibility test outputs
+data/full_repro_*.db
+data/full_repro_exports_*/
+ground_truth/full_repro_*/
