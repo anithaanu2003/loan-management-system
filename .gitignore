@@ -21,3 +21,8 @@ venv/
 
 # IDE files
 .vscode/
+
+# Temporary reproducibility test outputs
+data/repro_test_*.db
+data/repro_exports_*/
+ground_truth/repro_test_*/

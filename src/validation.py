@@ -6,12 +6,39 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parents[1]
 DB_PATH = ROOT_DIR / "data" / "loan_management.db"
 
+TABLES = [
+    "Applicant",
+    "Employment",
+    "IncomeRecord",
+    "CreditFacility",
+    "LoanProduct",
+    "LoanApplication",
+    "Document",
+    "AffordabilityCheck",
+    "Decision",
+    "RepaymentSchedule",
+    "ApplicationEvent",
+    "DisbursementEvent"
+]
 
-def validate_database():
 
-    connection = sqlite3.connect(DB_PATH)
+def validate_database(db_path=None):
+
+    target_db = Path(db_path).resolve() if db_path else DB_PATH
+    connection = sqlite3.connect(target_db)
 
     try:
+        report = {
+            "database": str(target_db),
+            "record_counts": {},
+            "foreign_key_violations": 0,
+            "date_validation": {},
+            "lifecycle_inconsistencies": 0,
+            "disbursement_status_inconsistencies": 0,
+            "missing_successful_disbursement_events": 0,
+            "detected_anomalies": {}
+        }
+
         print("=" * 60)
         print("LOAN MANAGEMENT SYSTEM - VALIDATION REPORT")
         print("=" * 60)
@@ -19,26 +46,12 @@ def validate_database():
         # 1. Record counts
         print("\n1. RECORD COUNTS")
 
-        tables = [
-            "Applicant",
-            "Employment",
-            "IncomeRecord",
-            "CreditFacility",
-            "LoanProduct",
-            "LoanApplication",
-            "Document",
-            "AffordabilityCheck",
-            "Decision",
-            "RepaymentSchedule",
-            "ApplicationEvent",
-            "DisbursementEvent"
-        ]
-
-        for table in tables:
+        for table in TABLES:
             count = connection.execute(
                 f"SELECT COUNT(*) FROM {table}"
             ).fetchone()[0]
 
+            report["record_counts"][table] = count
             print(f"{table}: {count}")
 
         # 2. Foreign key validation
@@ -47,6 +60,8 @@ def validate_database():
         foreign_key_errors = connection.execute(
             "PRAGMA foreign_key_check"
         ).fetchall()
+
+        report["foreign_key_violations"] = len(foreign_key_errors)
 
         print("Foreign key violations:", len(foreign_key_errors))
 
@@ -57,19 +72,19 @@ def validate_database():
         print("\n3. DATE VALIDATION")
 
         date_checks = {
-            "Employment end date before start date": """
+            "invalid_employment_dates": """
                 SELECT COUNT(*) FROM Employment
                 WHERE end_date IS NOT NULL
                 AND end_date < start_date
             """,
 
-            "Income end date before effective date": """
+            "invalid_income_dates": """
                 SELECT COUNT(*) FROM IncomeRecord
                 WHERE effective_to IS NOT NULL
                 AND effective_to < effective_from
             """,
 
-            "Document verified before submission": """
+            "invalid_document_dates": """
                 SELECT COUNT(*) FROM Document
                 WHERE verified_at IS NOT NULL
                 AND submitted_at IS NOT NULL
@@ -77,9 +92,10 @@ def validate_database():
             """
         }
 
-        for description, query in date_checks.items():
+        for name, query in date_checks.items():
             count = connection.execute(query).fetchone()[0]
-            print(f"{description}: {count}")
+            report["date_validation"][name] = count
+            print(f"{name}: {count}")
 
         # 4. Application lifecycle validation
         print("\n4. APPLICATION LIFECYCLE VALIDATION")
@@ -100,6 +116,8 @@ def validate_database():
             WHERE e.new_status IS NULL
                OR a.application_status != e.new_status
         """).fetchall()
+
+        report["lifecycle_inconsistencies"] = len(lifecycle_errors)
 
         print("Lifecycle inconsistencies:", len(lifecycle_errors))
 
@@ -130,6 +148,10 @@ def validate_database():
               )
         """).fetchall()
 
+        report["disbursement_status_inconsistencies"] = len(
+            disbursement_errors
+        )
+
         print(
             "Unexpected successful disbursements with incorrect application status:",
             len(disbursement_errors)
@@ -138,7 +160,6 @@ def validate_database():
         for row in disbursement_errors:
             print(row)
 
-        # Check whether DISBURSED applications have a successful event.
         missing_disbursement_events = connection.execute("""
             SELECT a.application_id
             FROM LoanApplication a
@@ -151,6 +172,10 @@ def validate_database():
               )
         """).fetchall()
 
+        report["missing_successful_disbursement_events"] = len(
+            missing_disbursement_events
+        )
+
         print(
             "DISBURSED applications without successful events:",
             len(missing_disbursement_events)
@@ -162,7 +187,7 @@ def validate_database():
         # 6. Business rule and anomaly validation
         print("\n6. BUSINESS RULE AND ANOMALY VALIDATION")
 
-        # ANOM-001: Loan term outside product range
+        # ANOM-001
         term_errors = connection.execute("""
             SELECT
                 a.application_id,
@@ -182,7 +207,7 @@ def validate_database():
         for row in term_errors:
             print(row)
 
-        # ANOM-002: Repayment amount mismatch
+        # ANOM-002
         repayment_errors = connection.execute("""
             SELECT
                 schedule_id,
@@ -202,7 +227,7 @@ def validate_database():
         for row in repayment_errors:
             print(row)
 
-        # ANOM-003: Decision before affordability check
+        # ANOM-003
         decision_errors = connection.execute("""
             SELECT
                 d.decision_id,
@@ -221,7 +246,7 @@ def validate_database():
         for row in decision_errors:
             print(row)
 
-        # ANOM-004: Conflicting income records
+        # ANOM-004
         income_errors = connection.execute("""
             SELECT
                 applicant_id,
@@ -239,7 +264,7 @@ def validate_database():
         for row in income_errors:
             print(row)
 
-        # ANOM-005: Duplicate successful disbursements
+        # ANOM-005
         duplicate_disbursements = connection.execute("""
             SELECT
                 application_id,
@@ -257,7 +282,7 @@ def validate_database():
         for row in duplicate_disbursements:
             print(row)
 
-        # ANOM-006: Duplicate loan applications
+        # ANOM-006
         duplicate_applications = connection.execute("""
             SELECT
                 applicant_id,
@@ -283,29 +308,41 @@ def validate_database():
         for row in duplicate_applications:
             print(row)
 
+        # Store anomaly counts in the report
+        report["detected_anomalies"] = {
+            "term_outside_product_range": len(term_errors),
+            "repayment_total_mismatch": len(repayment_errors),
+            "decision_before_required_check": len(decision_errors),
+            "conflicting_income_records": len(income_errors),
+            "duplicate_successful_disbursement": len(duplicate_disbursements),
+            "duplicate_loan_application_groups": len(duplicate_applications)
+        }
+
         # 7. Final report
         print("\n" + "=" * 60)
         print("VALIDATION SUMMARY")
         print("=" * 60)
 
-        print("Foreign key violations:", len(foreign_key_errors))
-        print("Lifecycle inconsistencies:", len(lifecycle_errors))
-        print("Disbursement status inconsistencies:", len(disbursement_errors))
+        print("Foreign key violations:", report["foreign_key_violations"])
+        print("Lifecycle inconsistencies:", report["lifecycle_inconsistencies"])
+        print(
+            "Disbursement status inconsistencies:",
+            report["disbursement_status_inconsistencies"]
+        )
         print(
             "Missing successful disbursement events:",
-            len(missing_disbursement_events)
+            report["missing_successful_disbursement_events"]
         )
 
         print("\nKnown anomaly detection results:")
-        print("ANOM-001:", len(term_errors))
-        print("ANOM-002:", len(repayment_errors))
-        print("ANOM-003:", len(decision_errors))
-        print("ANOM-004:", len(income_errors))
-        print("ANOM-005:", len(duplicate_disbursements))
-        print("ANOM-006:", len(duplicate_applications))
+
+        for anomaly, count in report["detected_anomalies"].items():
+            print(f"{anomaly}: {count}")
 
         print("\nVALIDATION COMPLETED")
         print("=" * 60)
+
+        return report
 
     finally:
         connection.close()
@@ -325,6 +362,5 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
-    DB_PATH = Path(args.db).resolve()
 
-    validate_database()
+    validate_database(args.db)
